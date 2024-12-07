@@ -14,10 +14,16 @@ const ContextProvider=(props)=>{
     const[loading,setloading]=useState(false);
     const[resultData,setresultData]=useState("")
 
-    const delayPara=(index,nextWord)=>{
+    const delayPara=(index,nextWord,accumulatedText)=>{
         setTimeout(function (){
-            setresultData(prev=>prev+nextWord)
+            setresultData(accumulatedText)
         },75*index)
+
+    }
+
+    const newchat=()=>{
+        setloading(false)
+        setshowResult(false)
 
     }
 
@@ -26,32 +32,47 @@ const ContextProvider=(props)=>{
         setresultData("")
         setloading(true)
         setshowResult(true)
-        setrecentPrompt(input)
-        setprevPrompt(prev=>[...prev,input])
-       const response = await run(input)
+        let response;
+        if(prompt !==undefined){
+            response=await runchat(prompt);
+            setrecentPrompt(prompt)
+        }
+        else{
+            setprevPrompt(prev=>[...prev,input])
+            setrecentPrompt(input)
+            response=await run(input)
+
+        }
+        // setrecentPrompt(input)
+        // setprevPrompt(prev=>[...prev,input])
+    //    const response = await run(input)
 
        let responseArray=response.split("**")
-       let newResponse;
+       let newResponse ="";
        for(let i=0;i<responseArray.length;i++){
-        if(i==0 || i%2 !==1){
+        if(i===0 || i%2 !==1){
             newResponse+=responseArray[i]
         }
         else{
-            newResponse+="<b>"+responseArray+"</b>"
+            newResponse+="<b>"+responseArray[i]+"</b>"
         }
        }
        let newResponse2 = newResponse.split("*").join("</br>")
 
      let newResponseArray=newResponse2.split(" ");
+     let accumulatedText=""
      for(let i=0; i<newResponseArray.length;i++){
-        const nextWord=newResponseArray[i]
-        delayPara(i,nextWord+" ")
+        // console.log(newResponseArray)
+        const nextWord=newResponseArray[i];
+        accumulatedText +=nextWord +" "
+        delayPara(i,nextWord+" ",accumulatedText)
      }
-    //    setresultData(newResponse2)
+       setresultData(newResponse2)
        setloading(false)
        setinput("")
 
     }
+    // console.log(resultData)
 // onsent("what is the hightest programming lanuage")
     const contextValue = {
         prevPrompt,
@@ -63,7 +84,8 @@ const ContextProvider=(props)=>{
         loading,
         resultData,
         input,
-        setinput
+        setinput,
+        newchat
 
 
 

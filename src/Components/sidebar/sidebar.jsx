@@ -7,12 +7,17 @@ import { Context } from "../../context/context"
 const Sidebar=()=>{
 
     const[extended,setextended]=useState(false)
-    // const {onsent,prevprompt,setrecentPrompt}=useContext(Context)
+    const {onsent,prevPrompt,setrecentPrompt,newchat}=useContext(Context)
+
+    const loadprompt= async(prompt) => {
+        setrecentPrompt(prompt)
+       await onsent(prompt)
+    }
     return(
         <div className="sidebar">
             <div className="top">
                 <img  onClick={()=>setextended(prev=>!prev)} className='menu' src={assets.menu_icon} alt="" />
-                <div className="new-chat">
+                <div onClick={()=>newchat()} className="new-chat">
                     <img src={assets.plus_icon} alt="" />
                     {extended?<p>New chat</p>:null}
                 </div>
@@ -20,10 +25,19 @@ const Sidebar=()=>{
                 ?
                 <div className="recent">
                     <p className="recent-title">Recent</p>
-                    <div className="recent-entry">
+                    {prevPrompt.map((item,index)=>{
+                        return(
+                            <div onClick={()=>loadprompt(item)} className="recent-entry">
+                            <img src={assets.message_icon} alt="" />
+                            <p>{item.slice(0,16)}..</p>
+                        </div>
+
+                        )
+                    })}
+                    {/* <div className="recent-entry">
                         <img src={assets.message_icon} alt="" />
                         <p>What is react</p>
-                    </div>
+                    </div> */}
 
                 </div>
                 :null

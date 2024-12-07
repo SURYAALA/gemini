@@ -3,16 +3,18 @@
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: darkgray;
+    background-color: #fdd4f1;
+    /* width: 200px; */
 }
 .sidebar img{
-    width:20px
+    width:22px
 }
 .sidebar .menu{
     display: block;
-    margin-left: 14px;
+    margin-left: 15px;
     cursor: pointer;
     margin-top: 10px;
+    
 }
 .sidebar .new-chat{
     margin-top: 50px;
@@ -20,19 +22,21 @@
     align-items: center;
     background-color: #e6eaf1;
     border-radius: 50px;
-    font-size: 15px;
+    font-size: 20px;
     gap: 5px;
     color: grey;
     cursor: pointer;
-    padding: 3px;
+    padding: 1px;
 }
 .sidebar .recent{
     display: flex;
     flex-direction: column;
+    animation: fadeIn 1.5s;
 }
 .sidebar .recent-title{
     margin-top: 30px;
     margin-bottom: 20px;
+    font-size: 20px;
 }
 .sidebar .recent-entry{
     display: flex;
@@ -55,4 +59,10 @@
     padding-right: 10px;
     cursor: pointer;
 
+}
+@media (max-width:600px) {
+    .sidebar{
+        display: none;
+
+    }
 }

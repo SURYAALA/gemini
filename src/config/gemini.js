@@ -7,7 +7,7 @@ import {
     HarmBlockThreshold,
   } from "@google/generative-ai";
   
-  const apiKey = "AIzaSyCElkD8Dy36QM-opaoPkhIKt6FETxIs0ew";
+  const apiKey = "AIzaSyBrdG8WHFOOQTVqp2FwD1mEWoUM62ANSrQ";
   const genAI = new GoogleGenerativeAI(apiKey);
   
   const model = genAI.getGenerativeModel({
@@ -31,7 +31,6 @@ import {
   
     const result = await chatSession.sendMessage(prompt);
     const response=result.response;
-    console.log(result.response.text());
     return response.text();
   }
   
